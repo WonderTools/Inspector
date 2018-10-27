@@ -47,10 +47,11 @@ namespace InspectorClient
                 x.AddVersion("1.0.2.320");
                 x.AddEnvironment("development");
                 x.AddKeyValue("key", "Value");
-            //   2 x.UseEndPoint("/api/version");
-            //    x.GuardEndPoint(Method);
-            //    x.GuardWithWTHeaderAuthentication("ExpectedPassword", "/api/guarded-version");
-            //    x.GuardWithWTHeaderAuthentication(Method, "/api/guarded-version");
+                x.SetBaseEndpoint("/inspector");
+                //   2 x.UseEndPoint("/api/version");
+                //    x.GuardEndPoint(Method);
+                //    x.GuardWithWTHeaderAuthentication("ExpectedPassword", "/api/guarded-version");
+                //    x.GuardWithWTHeaderAuthentication(Method, "/api/guarded-version");
             });
 
 
