@@ -55,6 +55,11 @@ namespace WonderTools.Inspector
 
                 _options.BaseEndPoint = baseEndpoint;
             }
+
+            public void EnableCors()
+            {
+                _options.IsCorsEnabled = true;
+            }
         }
     }
 }

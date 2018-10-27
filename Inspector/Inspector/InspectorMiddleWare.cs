@@ -23,23 +23,46 @@ namespace WonderTools.Inspector
             var path = context.Request.Path;
             var method = context.Request.Method;
             if (IsRequestForInspection(path, method)) await HandleInspection(context);
+            else if (IsRequestForPreflightInspection(path, method)) await HandlePreflight(context);
             else await next.Invoke();
+        }
+
+        private bool IsRequestForPreflightInspection(string path, string method)
+        {
+            return IsRequestValid(path, method, "/version", "options");
         }
 
         private bool IsRequestForInspection(string path, string method)
         {
-            return IsRequestValid(path, method, _options.BaseEndPoint+"/version", "get");
+            return IsRequestValid(path, method, "/version", "get");
         }
 
         private bool IsRequestValid(string requestPath, string requestMethod, string expectedAdditionalPath, string expectedMethod)
         {
-            var expected = expectedAdditionalPath;
+            var expectePath = _options.BaseEndPoint + expectedAdditionalPath;
             if (string.IsNullOrWhiteSpace(requestPath)) return false;
             if (string.IsNullOrEmpty(requestMethod)) return false;
             if (!requestMethod.Equals(expectedMethod, StringComparison.InvariantCultureIgnoreCase)) return false;
-            if (requestPath.Equals(expected, StringComparison.InvariantCultureIgnoreCase)) return true;
-            if (requestPath.Equals(expected + "/", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (requestPath.Equals(expectePath, StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (requestPath.Equals(expectePath + "/", StringComparison.InvariantCultureIgnoreCase)) return true;
             return false;
+        }
+
+        private async Task HandlePreflight(HttpContext context)
+        {
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "null");
+            context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "wondertools-authorization");
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
+
+            //context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
+
+            //context.Response.Headers.Add("Access-Control-Allow-Credentials", new[] { "true" });
+            //context.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "wondertools-authorization", "cache-control" });
+            //context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*"});
+            context.Response.Headers.Add("Vary", new[] { "Origin" });
+            context.Response.StatusCode = 204;
+            await context.Response.WriteAsync(string.Empty, Encoding.UTF8);
         }
 
 
@@ -48,7 +71,10 @@ namespace WonderTools.Inspector
             context.Response.StatusCode = 200;
             context.Response.ContentType = "application/json";
             var dictionary = _repository.GetDictionary();
-            
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "wondertools-authorization");
+            context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "null");
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
             var jsonString = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
             await context.Response.WriteAsync(jsonString, Encoding.UTF8);
         }
@@ -61,15 +87,7 @@ namespace WonderTools.Inspector
         //    await context.Response.WriteAsync(html, Encoding.UTF8);
         //}
 
-        //private async Task HandlePreflight(HttpContext context)
-        //{
-        //    context.Response.Headers.Add("Access-Control-Allow-Credentials", new[] { "true" });
-        //    context.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "authorization", "cache-control" });
-        //    context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "null" });
-        //    context.Response.Headers.Add("Vary", new[] { "Origin" });
-        //    context.Response.StatusCode = 204;
-        //    await context.Response.WriteAsync(string.Empty, Encoding.UTF8);
-        //}
+        
 
         //private async Task HandleJsRequest(HttpContext context)
         //{
@@ -112,10 +130,7 @@ namespace WonderTools.Inspector
         //    return IsRequestValid(path, method, "/ui", "options");
         //}
 
-        //private bool IsRequestForPreflightJitLogs(string path, string method)
-        //{
-        //    return IsRequestValid(path, method, "/logs", "options");
-        //}
+        
 
 
 

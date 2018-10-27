@@ -25,8 +25,8 @@ namespace InspectorClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddInspector();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -41,6 +41,14 @@ namespace InspectorClient
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.UseCors(builder =>
+            //{
+            //    builder.AllowAnyOrigin();
+            //    builder.AllowAnyHeader();
+            //    builder.AllowAnyMethod();
+            //    builder.AllowCredentials();
+            //});
+
             app.UseInspector(x =>
             {
                 x.AddName("Servic Name - Sample Service");
@@ -48,6 +56,7 @@ namespace InspectorClient
                 x.AddEnvironment("development");
                 x.AddKeyValue("key", "Value");
                 x.SetBaseEndpoint("/inspector");
+                x.EnableCors();
                 //   2 x.UseEndPoint("/api/version");
                 //    x.GuardEndPoint(Method);
                 //    x.GuardWithWTHeaderAuthentication("ExpectedPassword", "/api/guarded-version");
