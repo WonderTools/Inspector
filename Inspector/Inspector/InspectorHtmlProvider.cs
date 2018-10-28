@@ -2,7 +2,7 @@
 {
     public static class InspectorHtmlProvider
     {
-        public static string GetHtml(string url)
+        public static string GetHtml(string url, string header)
         {
             return $@"<html>
     <head>
@@ -67,7 +67,7 @@
                     }}
                 }};
                 xmlHttp.open( ""GET"", url);
-                xmlHttp.setRequestHeader(""wondertools-authorization"",key);
+                xmlHttp.setRequestHeader(""{header}"",key);
                 xmlHttp.send(null);
                 return xmlHttp.response;
             }}

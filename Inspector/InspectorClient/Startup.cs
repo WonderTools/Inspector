@@ -59,7 +59,7 @@ namespace InspectorClient
                 x.EnableCors();
                 x.UseAuthenticationHeader("somevalue");
                 x.AuthenticateWith(IsValid);
-                x.AuthenticateWith("string", "string", "string");
+                x.AuthenticateWith("nachi", "seetha", "suchendra");
             });
 
             bool IsValid(string value)

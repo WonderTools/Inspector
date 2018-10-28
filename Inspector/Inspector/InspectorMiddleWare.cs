@@ -73,6 +73,12 @@ namespace WonderTools.Inspector
             await context.Response.WriteAsync(string.Empty);
         }
 
+        private static async Task RespondWith403(HttpContext context)
+        {
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync(string.Empty);
+        }
+
         private static void AddCorsResponseHeaders(HttpContext context)
         {
             context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
@@ -85,10 +91,30 @@ namespace WonderTools.Inspector
 
         private async Task HandleInspection(HttpContext context)
         {
+            var isAuthenticated = true;
+            if (_options.Authenticator != null)
+            {
+                isAuthenticated = IsAuthenticated(context);
+            }
+
+            if (isAuthenticated) await RespondWithData(context);
+            else await RespondWith403(context);
+
+        }
+
+        private bool IsAuthenticated(HttpContext context)
+        {
+            if (!context.Request.Headers.ContainsKey(_options.AuthenticationHeader)) return false;
+            var token = context.Request.Headers[_options.AuthenticationHeader];
+            return _options.Authenticator(token);
+        }
+
+        private async Task RespondWithData(HttpContext context)
+        {
             context.Response.StatusCode = 200;
             context.Response.ContentType = "application/json";
             var dictionary = _repository.GetDictionary();
-            if(_options.IsCorsEnabled) AddCorsResponseHeaders(context);
+            if (_options.IsCorsEnabled) AddCorsResponseHeaders(context);
             var jsonString = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
             await context.Response.WriteAsync(jsonString, Encoding.UTF8);
         }
@@ -103,7 +129,7 @@ namespace WonderTools.Inspector
             
             context.Response.StatusCode = 200;
             context.Response.ContentType = " text/html; charset=utf-8";
-            var html = InspectorHtmlProvider.GetHtml(_options.BaseEndPoint + "/version");
+            var html = InspectorHtmlProvider.GetHtml(_options.BaseEndPoint + "/version", _options.AuthenticationHeader);
             await context.Response.WriteAsync(html, Encoding.UTF8);
         }
 
