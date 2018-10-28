@@ -4,6 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>WonderTools.Inspector</RootNamespace>
     <AssemblyName>WonderTools.Inspector</AssemblyName>
+    <Company>WonderTools</Company>
+    <Authors>Nachiappan</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Description>Inspector is a asp.net core middle ware.
+When installed, then a version end point is created in the application.
+Information such as version, environment, app name can be made available at this end point</Description>
+    <Copyright>Copyright 2018 WonderTools</Copyright>
+    <PackageTags>version,inspector,asp.net-core,</PackageTags>
+    <RepositoryType>Github</RepositoryType>
+    <RepositoryUrl>https://github.com/WonderTools/Inspector</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
