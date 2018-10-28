@@ -56,7 +56,7 @@ namespace InspectorClient
                 x.AddEnvironment("development");
                 x.AddKeyValue("key", "Value");
                 x.SetBaseEndpoint("/inspector");
-                x.EnableCors();
+                //x.EnableCors();
                 //   2 x.UseEndPoint("/api/version");
                 //    x.GuardEndPoint(Method);
                 //    x.GuardWithWTHeaderAuthentication("ExpectedPassword", "/api/guarded-version");

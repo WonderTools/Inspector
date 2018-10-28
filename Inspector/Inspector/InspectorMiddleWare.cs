@@ -50,19 +50,26 @@ namespace WonderTools.Inspector
 
         private async Task HandlePreflight(HttpContext context)
         {
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "null");
+            if (_options.IsCorsEnabled)
+            {
+                AddCorsResponseHeaders(context);
+                context.Response.StatusCode = 204;
+                await context.Response.WriteAsync(string.Empty, Encoding.UTF8);
+            }
+            else
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(string.Empty);
+            }            
+        }
+
+        private static void AddCorsResponseHeaders(HttpContext context)
+        {
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             context.Response.Headers.Add("Access-Control-Allow-Headers", "wondertools-authorization");
-            context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
-
-            //context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
-
-            //context.Response.Headers.Add("Access-Control-Allow-Credentials", new[] { "true" });
-            //context.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "wondertools-authorization", "cache-control" });
-            //context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*"});
-            context.Response.Headers.Add("Vary", new[] { "Origin" });
-            context.Response.StatusCode = 204;
-            await context.Response.WriteAsync(string.Empty, Encoding.UTF8);
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
+            context.Response.Headers.Add("Vary", new[] {"Origin"});
         }
 
 
@@ -71,10 +78,7 @@ namespace WonderTools.Inspector
             context.Response.StatusCode = 200;
             context.Response.ContentType = "application/json";
             var dictionary = _repository.GetDictionary();
-            context.Response.Headers.Add("Access-Control-Allow-Headers", "wondertools-authorization");
-            context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "null");
-            context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
+            AddCorsResponseHeaders(context);
             var jsonString = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
             await context.Response.WriteAsync(jsonString, Encoding.UTF8);
         }
