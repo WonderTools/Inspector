@@ -18,4 +18,17 @@ namespace WonderTools.Inspector
         public bool IsLoginPageEnabled { get; set; }
 
     }
+
+    public static class InspectorOptionsExtentions
+    {
+        public static string GetInspectorUri(this InspectorOptions options)
+        {
+            return options.BaseEndPoint + "/version";
+        }
+
+        public static string GetInspectorLoginUri(this InspectorOptions options)
+        {
+            return options.BaseEndPoint + "/version-login";
+        }
+    }
 }

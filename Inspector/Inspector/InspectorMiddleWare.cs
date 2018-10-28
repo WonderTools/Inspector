@@ -29,27 +29,26 @@ namespace WonderTools.Inspector
 
         private bool IsRequestForPreflightInspection(string path, string method)
         {
-            return IsRequestValid(path, method, "/version", "options");
+            return IsRequestValid(path, method, _options.GetInspectorUri(), "options");
         }
 
         private bool IsRequestForInspectionLogin(string path, string method)
         {
-            return IsRequestValid(path, method, "/version-login", "get");
+            return IsRequestValid(path, method, _options.GetInspectorLoginUri(), "get");
         }
 
         private bool IsRequestForInspection(string path, string method)
         {
-            return IsRequestValid(path, method, "/version", "get");
+            return IsRequestValid(path, method, _options.GetInspectorUri(), "get");
         }
 
-        private bool IsRequestValid(string requestPath, string requestMethod, string expectedAdditionalPath, string expectedMethod)
+        private bool IsRequestValid(string requestPath, string requestMethod, string expectedPath, string expectedMethod)
         {
-            var expectePath = _options.BaseEndPoint + expectedAdditionalPath;
             if (string.IsNullOrWhiteSpace(requestPath)) return false;
             if (string.IsNullOrEmpty(requestMethod)) return false;
             if (!requestMethod.Equals(expectedMethod, StringComparison.InvariantCultureIgnoreCase)) return false;
-            if (requestPath.Equals(expectePath, StringComparison.InvariantCultureIgnoreCase)) return true;
-            if (requestPath.Equals(expectePath + "/", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (requestPath.Equals(expectedPath, StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (requestPath.Equals(expectedPath + "/", StringComparison.InvariantCultureIgnoreCase)) return true;
             return false;
         }
 
