@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WonderTools.Inspector
@@ -59,6 +60,27 @@ namespace WonderTools.Inspector
             public void EnableCors()
             {
                 _options.IsCorsEnabled = true;
+            }
+
+            public void UseAuthenticationHeader(string authenticationHeader)
+            {
+                _options.AuthenticationHeader = authenticationHeader;
+            }
+
+            public void AuthenticateWith(params string[] validTokens)
+            {
+                SetAuthenticator(validTokens.Contains);
+            }
+
+            public void AuthenticateWith(Func<string, bool> authenticator)
+            {
+                SetAuthenticator(authenticator);
+            }
+
+            private void SetAuthenticator(Func<string, bool> authenticator)
+            {
+                _options.Authenticator = authenticator;
+                _options.IsLoginPageEnabled = true;
             }
         }
     }

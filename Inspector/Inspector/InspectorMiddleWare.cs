@@ -8,7 +8,7 @@ namespace WonderTools.Inspector
 {
     public class InspectorMiddleWare
     {
-        private InspectorRepository _repository;
+        private readonly InspectorRepository _repository;
         private readonly InspectorOptions _options;
 
         public InspectorMiddleWare(InspectorRepository repository, InspectorOptions options)
@@ -17,19 +17,24 @@ namespace WonderTools.Inspector
             _options = options;
         }
 
-
         public async Task Process(HttpContext context, Func<Task> next)
         {
             var path = context.Request.Path;
             var method = context.Request.Method;
             if (IsRequestForInspection(path, method)) await HandleInspection(context);
             else if (IsRequestForPreflightInspection(path, method)) await HandlePreflight(context);
+            else if (IsRequestForInspectionLogin(path, method)) await HandleInspectionLogin(context);
             else await next.Invoke();
         }
 
         private bool IsRequestForPreflightInspection(string path, string method)
         {
             return IsRequestValid(path, method, "/version", "options");
+        }
+
+        private bool IsRequestForInspectionLogin(string path, string method)
+        {
+            return IsRequestValid(path, method, "/version-login", "get");
         }
 
         private bool IsRequestForInspection(string path, string method)
@@ -58,16 +63,21 @@ namespace WonderTools.Inspector
             }
             else
             {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(string.Empty);
+                await RespondWith404(context);
             }            
+        }
+
+        private static async Task RespondWith404(HttpContext context)
+        {
+            context.Response.StatusCode = 404;
+            await context.Response.WriteAsync(string.Empty);
         }
 
         private static void AddCorsResponseHeaders(HttpContext context)
         {
             context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-            context.Response.Headers.Add("Access-Control-Allow-Headers", "wondertools-authorization");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "*");
             context.Response.Headers.Add("Access-Control-Allow-Methods", "GET");
             context.Response.Headers.Add("Vary", new[] {"Origin"});
         }
@@ -78,9 +88,23 @@ namespace WonderTools.Inspector
             context.Response.StatusCode = 200;
             context.Response.ContentType = "application/json";
             var dictionary = _repository.GetDictionary();
-            AddCorsResponseHeaders(context);
+            if(_options.IsCorsEnabled) AddCorsResponseHeaders(context);
             var jsonString = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
             await context.Response.WriteAsync(jsonString, Encoding.UTF8);
+        }
+
+        private async Task HandleInspectionLogin(HttpContext context)
+        {
+            if (!_options.IsLoginPageEnabled)
+            {
+                await RespondWith404(context);
+                return;
+            }
+            
+            context.Response.StatusCode = 200;
+            context.Response.ContentType = " text/html; charset=utf-8";
+            var html = InspectorHtmlProvider.GetHtml(_options.BaseEndPoint + "/version");
+            await context.Response.WriteAsync(html, Encoding.UTF8);
         }
 
         //private async Task HandleJitUiRequest(HttpContext context)
@@ -91,7 +115,7 @@ namespace WonderTools.Inspector
         //    await context.Response.WriteAsync(html, Encoding.UTF8);
         //}
 
-        
+
 
         //private async Task HandleJsRequest(HttpContext context)
         //{
@@ -134,7 +158,7 @@ namespace WonderTools.Inspector
         //    return IsRequestValid(path, method, "/ui", "options");
         //}
 
-        
+
 
 
 
