@@ -34,3 +34,6 @@ app.UseInspector(x =>
   "Some Key": "Some Value"
 }
 ```
+## Sample Usage
+The inspector has been installed and configured for a demo, and the code is available at
+https://github.com/WonderTools/InspectorUsageSample
