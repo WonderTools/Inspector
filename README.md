@@ -22,6 +22,7 @@ app.UseInspector(x =>
     x.AddEnvironment("developement");
     x.AddName("Inspector Usage Sample");
     x.AddVersion("1.0.0");
+    x.AddKeyValue("Some Key", "Some Value");
 });
 ```
 4. Now in your application, there should be an endpoint www.your-application.com/version that exposes the below data 
