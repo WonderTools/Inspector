@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WonderTools.Inspector
 {
-    public static partial class InspectorExtentions
+    public static class InspectorExtensions
     {
         public static void AddInspector(this IServiceCollection serviceCollection)
         {
