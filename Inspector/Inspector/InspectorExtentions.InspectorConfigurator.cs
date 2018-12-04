@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 
 namespace WonderTools.Inspector
 {
@@ -23,6 +25,22 @@ namespace WonderTools.Inspector
         public void AddName(string name)
         {
             _repository.AddKeyValue("Name", name);
+        }
+
+        public void AddConfigurationSection(IConfiguration configuration, string sectionName)
+        {
+            var inspectorSection = configuration.GetSection(sectionName);
+            var children = inspectorSection.GetChildren();
+
+            foreach (var child in children)
+            {
+                var key = child.Key;
+                var value = child.Value;
+                if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(key))
+                {
+                    _repository.AddKeyValue(key, value);
+                }
+            }
         }
 
         public void AddEnvironment(string environment)
