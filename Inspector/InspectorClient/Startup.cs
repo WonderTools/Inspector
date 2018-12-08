@@ -15,12 +15,12 @@ namespace InspectorClient
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            BuildConfiguration(env);
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,17 +41,13 @@ namespace InspectorClient
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseCors(builder =>
-            //{
-            //    builder.AllowAnyOrigin();
-            //    builder.AllowAnyHeader();
-            //    builder.AllowAnyMethod();
-            //    builder.AllowCredentials();
-            //});
+            app.UseInspector(Configuration, "Inspector");
+
 
             app.UseInspector(x =>
             {
-                x.AddName("Servic Name - Sample Service");
+                x.AddConfigurationSection(Configuration, "Inspector");
+                x.AddName("Service Name - Sample Service");
                 x.AddVersion("1.0.2.320");
                 x.AddEnvironment("development");
                 x.AddKeyValue("key", "Value");
@@ -88,6 +84,15 @@ namespace InspectorClient
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+
+        private void BuildConfiguration(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true);
+            Configuration = builder.Build();
         }
     }
 }
