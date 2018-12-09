@@ -1,6 +1,6 @@
-# Adding properties based on configuration
+# Changing the Version End Point
 
-* By default the end point where the version information is available is http://your-application/version
+* By default the end point is http://your-application/version
 * This could be changed by void InspectorConfigurator.SetBaseEndpoint(string) method while adding Inspector
 
 ## Example 1

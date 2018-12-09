@@ -46,6 +46,8 @@ The above docuementation should give you quick information about WonderTools.Ins
 
 [Documentation](https://wondertools.github.io/Inspector/Index)
 
+[Documentation: Changing Base Url](https://wondertools.github.io/Inspector/base-url)
+
 [Documentation: Authentication](https://wondertools.github.io/Inspector/authentication)
 
 [Documentation: Cors](https://wondertools.github.io/Inspector/cors)
