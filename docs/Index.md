@@ -40,7 +40,7 @@ The above docuementation should give you quick information about WonderTools.Ins
 
 [Code](https://github.com/WonderTools/Inspector)
 
-[Releases](https://www.nuget.org/packages/WonderTools.Inspector/)
+[Releases or Downloads](https://www.nuget.org/packages/WonderTools.Inspector/)
 
 [Sample Usage](https://github.com/WonderTools/InspectorUsageSample/)
 

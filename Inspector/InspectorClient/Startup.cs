@@ -64,10 +64,10 @@ namespace InspectorClient
             //    x.AuthenticateWith("nachi", "seetha", "suchendra");
             //});
 
-            bool IsValid(string value)
-            {
-                return true;
-            }
+            //bool IsValid(string value)
+            //{
+            //    return true;
+            //}
 
 
             if (env.IsDevelopment())
