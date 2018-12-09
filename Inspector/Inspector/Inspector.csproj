@@ -16,6 +16,12 @@ Information such as version, environment, app name can be made available at this
     <PackageTags>version,inspector,asp.net-core,</PackageTags>
     <RepositoryType>Github</RepositoryType>
     <RepositoryUrl>https://github.com/WonderTools/Inspector</RepositoryUrl>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>1.0.1
+Added support for adding properties from configuration
+
+1.0.0
+Initial version of Inspector</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
