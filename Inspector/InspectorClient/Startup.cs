@@ -46,7 +46,7 @@ namespace InspectorClient
 
             app.UseInspector(x =>
             {
-                x.AddConfigurationSection(Configuration, "Inspector");
+                x.AddConfigurationSection(Configuration, "SomeNode:2:Inspector");
                 x.AddName("Service Name - Sample Service");
                 x.AddVersion("1.0.2.320");
                 x.AddEnvironment("development");
