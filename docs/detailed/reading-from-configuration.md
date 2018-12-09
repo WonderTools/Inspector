@@ -1,1 +1,0 @@
-# Adding properties based on configuration
