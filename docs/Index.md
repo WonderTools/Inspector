@@ -1,17 +1,5 @@
 # Inspector
 
-Code
-https://github.com/WonderTools/Inspector
-
-Detailed Documentation
-https://wondertools.github.io/Inspector/
-
-Releases
-https://www.nuget.org/packages/WonderTools.Inspector/
-
-Sample Usage
-https://github.com/WonderTools/InspectorUsageSample/
-
 When developing web application, its common to have an end point in the application that gives information such as name, environment, version, build number etc.
 Inspector is a asp.net core middle ware that gives you the ability to add a version end point by writing minimal amount of code.
 
@@ -46,3 +34,19 @@ app.UseInspector(x =>
   "Some Key": "Some Value"
 }
 ```
+
+The above docuementation should give you quick information about WonderTools.Inspector. However if you are looking at more details the links below could help.
+
+
+[Code] (https://github.com/WonderTools/Inspector)
+
+[Releases](https://www.nuget.org/packages/WonderTools.Inspector/)
+
+[Sample Usage](https://github.com/WonderTools/InspectorUsageSample/)
+
+[Documentation](https://wondertools.github.io/Inspector/)
+
+[Documentation: Authentication](https://wondertools.github.io/Inspector/authentication)
+
+[Documentation: Configuring from configurations](https://wondertools.github.io/Inspector/reading-from-configuration)
+
