@@ -37,3 +37,8 @@ app.UseInspector(x =>
 ## Sample Usage
 The inspector has been installed and configured for a demo, and the code is available at
 https://github.com/WonderTools/InspectorUsageSample
+
+
+## Comprehensive Documentation
+https://wondertools.github.io/Inspector/Index
+
