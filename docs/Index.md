@@ -38,13 +38,13 @@ app.UseInspector(x =>
 The above docuementation should give you quick information about WonderTools.Inspector. However if you are looking at more details the links below could help.
 
 
-[Code] (https://github.com/WonderTools/Inspector)
+[Code](https://github.com/WonderTools/Inspector)
 
 [Releases](https://www.nuget.org/packages/WonderTools.Inspector/)
 
 [Sample Usage](https://github.com/WonderTools/InspectorUsageSample/)
 
-[Documentation](https://wondertools.github.io/Inspector/)
+[Documentation](https://wondertools.github.io/Inspector/Index)
 
 [Documentation: Authentication](https://wondertools.github.io/Inspector/authentication)
 
