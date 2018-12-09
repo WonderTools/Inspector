@@ -46,9 +46,9 @@ The above docuementation should give you quick information about WonderTools.Ins
 
 [Documentation](https://wondertools.github.io/Inspector/Index)
 
-[Documentation: Authentication](https://wondertools.github.io/Inspector/authentication)
+[Documentation: Authentication](https://wondertools.github.io/Inspector/detailed/authentication)
 
-[Documentation: Cors](https://wondertools.github.io/Inspector/cors)
+[Documentation: Cors](https://wondertools.github.io/Inspector/detailed/cors)
 
-[Documentation: Configuring from configurations](https://wondertools.github.io/Inspector/reading-from-configuration)
+[Documentation: Configuring from configurations](https://wondertools.github.io/Inspector/detailed/reading-from-configuration)
 
