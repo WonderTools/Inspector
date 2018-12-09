@@ -41,22 +41,26 @@ namespace InspectorClient
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseInspector(Configuration, "Inspector");
-
-
             app.UseInspector(x =>
             {
-                x.AddConfigurationSection(Configuration, "SomeNode:2:Inspector");
                 x.AddName("Service Name - Sample Service");
-                x.AddVersion("1.0.2.320");
-                x.AddEnvironment("development");
-                x.AddKeyValue("key", "Value");
-                x.SetBaseEndpoint("/inspector");
-                x.EnableCors();
-                x.UseAuthenticationHeader("somevalue");
-                x.AuthenticateWith(IsValid);
-                x.AuthenticateWith("nachi", "seetha", "suchendra");
+                x.AddConfigurationSection(Configuration, "Node1:Node2:1");
             });
+
+
+            //app.UseInspector(x =>
+            //{
+            //    x.AddConfigurationSection(Configuration, "ConfigurationData");
+            //    x.AddName("Service Name - Sample Service");
+            //    x.AddVersion("1.0.2.320");
+            //    x.AddEnvironment("development");
+            //    x.AddKeyValue("key", "Value");
+            //    x.SetBaseEndpoint("/inspector");
+            //    x.EnableCors();
+            //    x.UseAuthenticationHeader("somevalue");
+            //    x.AuthenticateWith(IsValid);
+            //    x.AuthenticateWith("nachi", "seetha", "suchendra");
+            //});
 
             bool IsValid(string value)
             {

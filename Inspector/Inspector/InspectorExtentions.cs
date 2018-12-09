@@ -40,33 +40,5 @@ namespace WonderTools.Inspector
             //loggerFactory.AddProvider(new JitLoggerProvider(repository));
             return builder;
         }
-
-        public static IApplicationBuilder UseInspector
-            (this IApplicationBuilder builder, IConfiguration configuration, string sectionName)
-        {
-            var inspectorSection = configuration.GetSection(sectionName);
-            var children = inspectorSection.GetChildren();
-
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-            foreach (var child in children)
-            {
-                var key = child.Key;
-                var value = child.Value;
-                if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(key))
-                {
-                    dictionary.Add(key, value);
-                }
-            }
-
-            builder.UseInspector(x =>
-            {
-                foreach (var keyValue in dictionary)
-                {
-                    x.AddKeyValue(keyValue.Key, keyValue.Value);
-                }
-            });
-            return builder;
-        }
     }
 }
