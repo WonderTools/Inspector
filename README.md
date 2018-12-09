@@ -34,11 +34,9 @@ app.UseInspector(x =>
   "Some Key": "Some Value"
 }
 ```
-## Sample Usage
-The inspector has been installed and configured for a demo, and the code is available at
-https://github.com/WonderTools/InspectorUsageSample
+## Important Links
+[Releases or Downloads](https://www.nuget.org/packages/WonderTools.Inspector/)
 
+[Sample Usage](https://github.com/WonderTools/InspectorUsageSample/)
 
-## Comprehensive Documentation
-https://wondertools.github.io/Inspector/Index
-
+[Documentation](https://wondertools.github.io/Inspector/Index)
