@@ -10,14 +10,14 @@ Releases
 https://www.nuget.org/packages/WonderTools.Inspector/
 
 Sample Usage
-https://github.com/WonderTools/InspectorUsageSample
+https://github.com/WonderTools/InspectorUsageSample/
 
 When developing web application, its common to have an end point in the application that gives information such as name, environment, version, build number etc.
 Inspector is a asp.net core middle ware that gives you the ability to add a version end point by writing minimal amount of code.
 
 ## How to use Inspector
 1. Install WonderTools/Inspector in your asp.net core application
-  * The nuget package could also be installed by nuget package manager or by command
+The nuget package could also be installed by nuget package manager or by command  
   ```PS
   Install-Package WonderTools.Inspector -Version 1.0.0
   ```
@@ -46,6 +46,3 @@ app.UseInspector(x =>
   "Some Key": "Some Value"
 }
 ```
-## Sample Usage
-The inspector has been installed and configured for a demo, and the code is available at
-https://github.com/WonderTools/InspectorUsageSample
