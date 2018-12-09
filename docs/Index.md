@@ -12,7 +12,7 @@ The nuget package could also be installed by nuget package manager or by command
 
 2. In the asp.net core Startup, In the method ConfigureServices, add Inspector by
   ```c#
-  services.AddInspector();
+  services.AddInspector(); 
   ```
 
 3. In the asp.net core Startup, In the method Configure, use Inspector by 
