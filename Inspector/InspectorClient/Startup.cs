@@ -46,6 +46,7 @@ namespace InspectorClient
                 x.AddName("Service Name - Sample Service");
                 x.AddConfigurationSection(Configuration, "Node1:Node2:1");
                 x.SetBaseEndpoint("/Hello/something");
+                x.AuthenticateWith();
             });
 
 
